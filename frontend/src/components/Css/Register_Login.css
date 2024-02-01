@@ -152,3 +152,220 @@ a:hover {
         font-size: 1.8rem;
     }
 }
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%; /* Ensures the input stretches to the container */
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 2.5rem; /* Adds space for the eye icon */
+    padding-left: 10px; /* Ensures text doesn't touch the left boundary */
+    height: 2.5rem; /* Ensures consistent height for inputs */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.password-wrapper input:focus {
+    border-color: #007bff; /* Adds focus effect */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.password-icon {
+    position: absolute;
+    right: 10px; /* Ensures the icon stays inside the input */
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+.password-icon:hover {
+    color: #007bff; /* Changes color on hover */
+}
+
+.password-icon:active {
+    transform: scale(0.9); /* Adds slight scaling effect on click */
+}
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 2.5rem; /* Space for the icon */
+    padding-left: 10px;
+    height: 2.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.password-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 1.2rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.password-icon:hover {
+    color: #007bff; /* Highlight on hover */
+}
+.view-btn {
+    padding: 5px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .view-btn:hover {
+    background-color: #138496;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+ /* General Styles */
+body {
+    background-color: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+    color: black; /* Set the default text color to black */
+  }
+  
+  /* Table Styles */
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: black; /* Set text color in the table */
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+  }
+  
+  .table td {
+    background-color: #fafafa;
+  }
+  
+  .table td button {
+    padding: 5px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .table td button:hover {
+    background-color: #138496;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    color: black; /* Set text color in modal content */
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    color: black; /* Close button color */
+  }
+  
+  /* Button Styles */
+  .btn-info {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .btn-info:hover {
+    background-color: #138496;
+  }
+  
+  .btn-primary {
+    background-color: blue;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: darkblue;
+  }
+  
+  /* Countdown Timer */
+  p {
+    margin-top: 10px;
+    color: gray;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .table th, .table td {
+      padding: 8px;
+    }
+  
+    .modal-content {
+      width: 250px;
+      height: 250px;
+    }
+  }
+  /* CSS for Navbar and Footer */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

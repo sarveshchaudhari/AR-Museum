@@ -4,19 +4,18 @@ import axios from 'axios';
 import { BASE_URL } from '../Config/Base_Url';
 import { AuthenticationContext } from '../globalstates/Authentication';
 import { Alertcontext } from '../globalstates/Alertmessage';
-import '../CSS/Register_Login.css';
+import '../CSS/Register_Login.css'; // Ensure the CSS file is updated as shown below
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importing icons from react-icons
 
 export default function Login() {
     const [submitted, issubmitted] = useState(false);
-    const [data, newData] = useState({
-        email: '',
-        password: ''
-    });
+    const [data, setData] = useState({ email: '', password: '' });
     const [message, setMessage] = useState({ msg: '', cls: '' });
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
-    const { alertmessage, setalertmessage } = useContext(Alertcontext);
     const { setAuthenticate } = useContext(AuthenticationContext);
+    const { alertmessage, setalertmessage } = useContext(Alertcontext);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -25,42 +24,43 @@ export default function Login() {
 
     const handleChange = (evt) => {
         const { id, value } = evt.target;
-        newData({
-            ...data,
-            [id]: value
-        });
+        setData({ ...data, [id]: value });
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     useEffect(() => {
         if (submitted) {
             const senddata = async () => {
                 try {
-                    if (data.email.slice(-10) !== "@gmail.com") {
-                        setalertmessage({ loginfailure: true });
-                        setMessage({ msg: "Enter Valid Credentials !!", cls: 'alert-danger' });
-                    } else if (data.password.length < 8 || !/\d/.test(data.password) || !/[a-z]/.test(data.password) || !/[A-Z]/.test(data.password) || !/[\W_]/.test(data.password)) {
-                        setalertmessage({ loginfailure: true });
-                        setMessage({ msg: "Enter Valid Credentials !!", cls: 'alert-danger' });
+                    if (!data.email.endsWith("@gmail.com")) {
+                        setMessage({ msg: "Enter a valid Gmail address!", cls: 'alert-danger' });
+                    } else if (data.password.length < 8) {
+                        setMessage({ msg: "Password must be at least 8 characters long.", cls: 'alert-danger' });
                     } else {
-                        const response = await axios.post(`${BASE_URL}login`, { email: data.email.trim(), password: data.password.trim() });
+                        const response = await axios.post(`${BASE_URL}login`, {
+                            email: data.email.trim(),
+                            password: data.password.trim()
+                        });
+
                         if (response.data.message === "Success") {
                             setAuthenticate({ status: true });
                             setalertmessage({ loginsuccess: true });
                             navigate("/home");
                         } else {
-                            setalertmessage({ loginfailure: true });
-                            setMessage({ msg: "Invalid email or password. Please try again.", cls: 'alert-danger' });
+                            setMessage({ msg: "Invalid email or password.", cls: 'alert-danger' });
                         }
                     }
                 } catch (error) {
-                    setalertmessage({ loginfailure: true });
                     setMessage({ msg: "An error occurred. Please try again later.", cls: 'alert-danger' });
                 }
             };
             senddata();
             issubmitted(false);
         }
-    }, [submitted, data, navigate, setalertmessage, setMessage, setAuthenticate]);
+    }, [submitted, data, setAuthenticate, navigate]);
 
     return (
         <div className="login-wrapper">
@@ -73,17 +73,37 @@ export default function Login() {
                     <form onSubmit={handleLogin}>
                         <div className="input-group">
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" onChange={handleChange} value={data.email} required />
+                            <input
+                                type="email"
+                                id="email"
+                                onChange={handleChange}
+                                value={data.email}
+                                required
+                            />
                         </div>
-                        <div className="input-group">
+                        <div className="input-group password-input-group">
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" name="password" onChange={handleChange} value={data.password} required />
+                            <div className="password-wrapper">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    onChange={handleChange}
+                                    value={data.password}
+                                    required
+                                />
+                                <span
+                                    className="password-icon"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
+                            </div>
                         </div>
                         <button type="submit" className="btn">Login</button>
                         <p>Don't have an account? <Link to="/signin">Register here</Link></p>
                     </form>
-                    {alertmessage.loginfailure && (
-                        <div className="error-message">
+                    {message.msg && (
+                        <div className={`error-message ${message.cls}`}>
                             <p>{message.msg}</p>
                         </div>
                     )}

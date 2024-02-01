@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../Config/Base_Url';
+import '../CSS/Register_Login.css';
 
 export default function Viewbooking() {
   const [info, setInfo] = useState([]);
@@ -10,28 +11,24 @@ export default function Viewbooking() {
   const [showModal, setShowModal] = useState(false);
   const [modalText, setModalText] = useState('');
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
-  let i = 0;
 
   useEffect(() => {
-    if (i === 0) {
-      const handleApiCall = async () => {
-        try {
-          const response = await axios.get(`${BASE_URL}/viewbooking`);
-          if (response.data.message !== 'Failed') {
-            setAvailable(true);
-            setInfo(response.data);
-            checkArAvailability(response.data);
-          } else {
-            setAvailable(false);
-          }
-        } catch (error) {
-          console.log(error);
+    const handleApiCall = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/viewbooking`);
+        if (response.data.message !== 'Failed') {
+          setAvailable(true);
+          setInfo(response.data);
+          checkArAvailability(response.data);
+        } else {
+          setAvailable(false);
         }
-      };
-      handleApiCall();
-      i++;
-    }
-  }, [i, setInfo, setAvailable]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleApiCall();
+  }, []);
 
   const checkArAvailability = (bookings) => {
     const currentTime = new Date();
@@ -82,10 +79,13 @@ export default function Viewbooking() {
   };
 
   return (
-    <div>
+    <div style={{ minHeight: 'calc(100vh - 100px)', paddingBottom: '50px' }}> {/* Adjust the container height */}
+      <h2 style={{ color: 'white', textAlign: 'center', fontSize: '36px', marginBottom: '20px' }}>
+        Your Bookings
+      </h2>
       {available ? (
         <div>
-          <table className="table" style={{ color: 'white' }}>
+          <table className="table" style={{ color: 'white', textAlign: 'center' }}>
             <thead>
               <tr>
                 <th scope="col">Sr.No.</th>
@@ -104,7 +104,7 @@ export default function Viewbooking() {
                   <td>{element.time || 'N/A'}</td>
                   <td>
                     <button
-                      className="btn btn-info"
+                      className="btn btn-info view-btn"
                       onClick={() => handleViewClick(element.name)}
                     >
                       View
@@ -150,6 +150,14 @@ export default function Viewbooking() {
                 alt="QR Code"
                 style={{ width: '200px', height: '200px' }}
               />
+              {/* Web Link Button */}
+              <div style={{ marginTop: '20px' }}>
+                <a href="https://end87.zappar-us.io/5531063496227749823/" target="_blank" rel="noopener noreferrer">
+                  <button className="btn btn-primary" style={{ backgroundColor: 'blue', color: 'white', padding: '8px 16px', border: 'none', borderRadius: '5px', fontSize: '14px', marginBottom: '10px' }}>
+                    Web Link
+                  </button>
+                </a>
+              </div>
               {/* Countdown Timer */}
               <p style={{ marginTop: '10px', color: 'gray' }}>
                 Closing in {formatTime(timeLeft)}
