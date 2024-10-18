@@ -1,24 +1,21 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../baseurl/Base_Url';
 import { AuthenticationContext } from '../globalstates/Authentication';
 import { Alertcontext } from '../globalstates/Alertmessage';
 import Alert from './Alert';
-import '../Css/Register_Login.css'
+import '../Css/Register_Login.css';
 
 export default function Login() {
     const [submitted, issubmitted] = useState(false);
-    const [data, newData] = useState(
-        {
-            email: '',
-            password: ''
-        }
-    );
+    const [data, newData] = useState({
+        email: '',
+        password: ''
+    });
     const [message, setMessage] = useState({ msg: '', cls: '' });
 
     const navigate = useNavigate();
-
     const { alertmessage, setalertmessage } = useContext(Alertcontext);
     const { setAuthenticate } = useContext(AuthenticationContext);
 
@@ -55,7 +52,7 @@ export default function Login() {
                             setAuthenticate({ status: true });
                             setalertmessage({ loginsuccess: true });
                             navigate("/home");
-                            console.log("Loggedin Successfully");
+                            console.log("Logged in Successfully");
                         } else {
                             navigate("/");
                             setalertmessage({ loginfailure: true });
@@ -64,16 +61,16 @@ export default function Login() {
                         }
                     }
                 } catch (error) {
-                    console.log("error occured");
+                    console.log("error occurred");
                 }
-            }
+            };
             senddata();
             issubmitted(false);
         }
     }, [submitted, data, navigate, setalertmessage, setMessage, setAuthenticate]);
 
     return (
-        <div>
+        <div className="login-wrapper">
             {(alertmessage.loginfailure) && <Alert message={message} />}
             <div className="container">
                 <div className="form-box">
@@ -93,5 +90,5 @@ export default function Login() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
