@@ -82,11 +82,3 @@ const navLinkStyle = {
     fontWeight: '500',
 };
 
-// Adding hover effect
-const hoverEffect = {
-    ':hover': {
-        color: '#FFEB3B', // Yellow hover
-        backgroundColor: 'rgba(255,255,255,0.1)',
-        borderRadius: '5px',
-    },
-};
