@@ -81,11 +81,9 @@ const handleViewBooking = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     handleUserSigninPost,
     handleUserLoginPost,
     handleUserSchedulePost,
-    handleViewBooking
+    handleViewBooking,
 }
