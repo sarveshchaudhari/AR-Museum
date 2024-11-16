@@ -3,8 +3,9 @@ const cors = require("cors");
 const app = express();
 const PORT=8002;
 
+
 const { mongoconnect } = require("./connection");
-mongoconnect("mongodb://localhost:27017/AR_MUSEUM").then(()=>console.log("database connected successfully")).catch((err) => {
+mongoconnect("mongodb://127.0.0.1:27017/AR_MUSEUM").then(()=>console.log("database connected successfully")).catch((err) => {
     console.log("Error in database connection :", err);
 });
 
