@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL } from '../baseurl/Base_Url';
+import { BASE_URL } from '../Config/Base_Url';
 import { AuthenticationContext } from '../globalstates/Authentication';
 import { Alertcontext } from '../globalstates/Alertmessage';
-import Alert from './Alert';
-import '../Css/Register_Login.css';
+import '../CSS/Register_Login.css';
 
 export default function Login() {
     const [submitted, issubmitted] = useState(false);
@@ -36,32 +35,26 @@ export default function Login() {
         if (submitted) {
             const senddata = async () => {
                 try {
-                    if (data.email.slice(-10,) !== "@gmail.com") {
-                        navigate("/");
+                    if (data.email.slice(-10) !== "@gmail.com") {
                         setalertmessage({ loginfailure: true });
                         setMessage({ msg: "Enter Valid Credentials !!", cls: 'alert-danger' });
-                        console.log("Enter valid email id !!");
                     } else if (data.password.length < 8 || !/\d/.test(data.password) || !/[a-z]/.test(data.password) || !/[A-Z]/.test(data.password) || !/[\W_]/.test(data.password)) {
-                        navigate("/");
                         setalertmessage({ loginfailure: true });
                         setMessage({ msg: "Enter Valid Credentials !!", cls: 'alert-danger' });
-                        console.log("Enter a valid password !!");
                     } else {
                         const response = await axios.post(`${BASE_URL}login`, { email: data.email.trim(), password: data.password.trim() });
                         if (response.data.message === "Success") {
                             setAuthenticate({ status: true });
                             setalertmessage({ loginsuccess: true });
                             navigate("/home");
-                            console.log("Logged in Successfully");
                         } else {
-                            navigate("/");
                             setalertmessage({ loginfailure: true });
-                            setMessage({ msg: "Enter Valid Credentials !!", cls: 'alert-danger' });
-                            console.log("Login Failed");
+                            setMessage({ msg: "Invalid email or password. Please try again.", cls: 'alert-danger' });
                         }
                     }
                 } catch (error) {
-                    console.log("error occurred");
+                    setalertmessage({ loginfailure: true });
+                    setMessage({ msg: "An error occurred. Please try again later.", cls: 'alert-danger' });
                 }
             };
             senddata();
@@ -71,7 +64,9 @@ export default function Login() {
 
     return (
         <div className="login-wrapper">
-            {(alertmessage.loginfailure) && <Alert message={message} />}
+            <div className="banner">
+                <h1>AR Museum Tour</h1>
+            </div>
             <div className="container">
                 <div className="form-box">
                     <h2>Login</h2>
@@ -87,6 +82,11 @@ export default function Login() {
                         <button type="submit" className="btn">Login</button>
                         <p>Don't have an account? <Link to="/signin">Register here</Link></p>
                     </form>
+                    {alertmessage.loginfailure && (
+                        <div className="error-message">
+                            <p>{message.msg}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

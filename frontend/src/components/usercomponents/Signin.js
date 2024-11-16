@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../baseurl/Base_Url';
+import { BASE_URL } from '../Config/Base_Url';
 import axios from 'axios';
 import { Alertcontext } from '../globalstates/Alertmessage';
 import Alert from './Alert';

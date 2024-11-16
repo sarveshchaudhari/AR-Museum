@@ -3,7 +3,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { Alertcontext } from '../globalstates/Alertmessage';
 import Alert from './Alert';
-import { BASE_URL } from '../baseurl/Base_Url';
+import { BASE_URL } from '../Config/Base_Url';
 
 export default function Schedulebooking() {
     const [date, setDate] = useState('');

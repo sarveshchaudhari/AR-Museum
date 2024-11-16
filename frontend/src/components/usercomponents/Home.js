@@ -1,6 +1,6 @@
 import React from 'react';
-import img1 from '../images/img1.jpg';
-import icon from '../images/image.png';
+import img1 from '../../assets/images/img1.jpg'; // Import the image
+import icon from '../../assets/images/image.png'; // Import the icon
 
 export default function Home() {
   const imgStyle = {

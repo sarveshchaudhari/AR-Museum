@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BASE_URL } from '../baseurl/Base_Url';
-import {Link} from 'react-router-dom'
+import { BASE_URL } from '../Config/Base_Url';
+import QRCode from 'react-qr-code'; // Import a QR code component for generating QR codes
 
 export default function Viewbooking() {
   const [info, setInfo] = useState([]);
   const [available, setAvailable] = useState(false);
   const [isArAvailable, setIsArAvailable] = useState(false);
   const [arLink, setArLink] = useState('');
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
   let i = 0;
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function Viewbooking() {
       const timeDifference = Math.abs(currentTime - bookingTime);
       const oneHour = 60 * 60 * 1000;
 
-      if (timeDifference === 0 ||  timeDifference<oneHour) {
+      if (timeDifference === 0 || timeDifference < oneHour) {
         setIsArAvailable(true);
         setArLink('https://p5l78.webar.run/334640235424248655/1.1.17/'); // Update this to the actual AR experience link
       }
@@ -47,7 +48,7 @@ export default function Viewbooking() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; 
+    return date.toISOString().split('T')[0];
   };
 
   const imgstyle = { color: "white" };
@@ -70,17 +71,21 @@ export default function Viewbooking() {
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
                   <td>{element.name}</td>
-                  <td>{formatDate(element.date)}</td> 
-                  <td>{element.time || 'N/A'}</td> 
+                  <td>{formatDate(element.date)}</td>
+                  <td>{element.time || 'N/A'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           {isArAvailable && (
             <div style={{ textAlign: 'center', marginTop: '20px' }}>
-              <Link to={arLink} target="_blank" rel="noopener noreferrer">
-                <button className="btn btn-primary">Access AR Experience</button>
-              </Link>
+              <button
+                className="btn btn-primary" 
+                style={{ backgroundColor: 'blue', color: 'white' }} // Button color
+                onClick={() => setShowModal(true)} // Show modal on click
+              >
+                View
+              </button>
             </div>
           )}
         </div>
@@ -89,6 +94,48 @@ export default function Viewbooking() {
           <h3>No Data Found</h3>
         </div>
       )}
+
+      {/* Modal */}
+      {showModal && (
+        <div className="modal" style={modalStyles}>
+          <div className="modal-content">
+            <span
+              className="close"
+              style={closeButtonStyle}
+              onClick={() => setShowModal(false)} // Close modal
+            >
+              &times;
+            </span>
+            <h2>QR Code and AR Link</h2>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <QRCode value={arLink} size={256} /> {/* Display the QR code */}
+            </div>
+            <p>Link: <a href={arLink} target="_blank" rel="noopener noreferrer">{arLink}</a></p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+// Modal styles
+const modalStyles = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000
+};
+
+const closeButtonStyle = {
+  position: 'absolute',
+  top: '10px',
+  right: '20px',
+  fontSize: '30px',
+  cursor: 'pointer'
+};
