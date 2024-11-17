@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthenticationContext } from '../globalstates/Authentication';
 import Alert from './Alert';
 import { Alertcontext } from '../globalstates/Alertmessage';
-import iconImage from '../../assets/images/img1.jpg'; // Import the main icon
+import iconImage from '../../assets/images/image.png'; // Import the main icon
 import logoutIcon from '../../assets/images/logout.png'; // Import the logout icon
 
 export default function Navbar() {
